@@ -13,7 +13,8 @@ function _complete-recent-args() {
     # add last 10 command lines' words
     integer i
     for i in "${(@)${(Onk@)history}[1,10]}"; do
-        compadd -Q -2 -V $i -- "${(z@)history[$i]}"
+        d=( ${(z@)history[$i]} )
+        compadd -Q -2 -V $i -d d -- '!'$^i:{0..$[ ${#d} -1]}
     done
 }
 
