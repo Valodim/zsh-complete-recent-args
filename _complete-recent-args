@@ -4,11 +4,10 @@ zmodload zsh/parameter
 function _complete-recent-args() {
     # add current edit buffer's words if exists
     local w
-    for w in "${(@)words}"; do
-        if [[ -n "${w}" ]]; then
-            compadd -Q -2 -V current -- "${w}"
-        fi
-    done
+    w=( ${words:#} )
+    if [[ ${#w} > 0 ]]; then
+        compadd -Q -2 -V current -d w -r ':' -- '!#:'{0..$[ ${#w} -1]}
+    fi
 
     # add last 10 command lines' words
     integer i
