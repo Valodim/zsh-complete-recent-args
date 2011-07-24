@@ -6,7 +6,7 @@ function _complete-recent-args() {
     local w
     w=( ${words:#} )
     if [[ ${#w} > 0 ]]; then
-        compadd -Q -2 -V current -d w -r ':' -- '!#:'{0..$[ ${#w} -1]}
+        compadd -Q -2 -V current -d w -r ':*\-' -- '!#:'{0..$[ ${#w} -1]}
     fi
 
     # add last 10 command lines' words
@@ -14,7 +14,7 @@ function _complete-recent-args() {
     local d
     for i in "${(@)${(Onk@)history}[1,10]}"; do
         d=( ${(z@)history[$i]} )
-        compadd -Q -2 -V $i -d d -r ':' -- '!'$^i:{0..$[ ${#d} -1]}
+        compadd -Q -2 -V $i -d d -r ':*\-' -- '!'$^i:{0..$[ ${#d} -1]}
     done
 }
 
